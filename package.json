@@ -1,0 +1,28 @@
+{
+  "name": "qBitTorrent-WebUI-mockup",
+  "version": "0.1.0",
+  "description": "As the title says.",
+  "main": "index.js",
+  "dependencies": {
+    "gaze": "~0.4.3",
+    "LiveScript": "~1.2.0",
+    "shelljs": "~0.2.6",
+    "socket.io": "~0.9.16",
+    "stylus": "~0.40.0",
+    "prelude-ls": "~1.0.3",
+    "templatizer": "~0.2.8",
+    "express": "~3.4.7",
+    "open": "0.0.4",
+    "jade": "~0.35.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "lsc make watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:Daiz/qb-ui.git"
+  },
+  "author": "Daiz <taneli.vatanen@gmail.com>",
+  "license": "None"
+}
