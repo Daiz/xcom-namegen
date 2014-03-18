@@ -11,7 +11,7 @@ Generator =
       out += """
       m_arr#{c}MFirstNames=""
       m_arr#{c}FFirstNames=""
-  
+
       """
   
     insert = (name, country) !->
@@ -19,6 +19,7 @@ Generator =
         out += """
         m_arr#{country}MLastNames=#{name}
         m_arr#{country}FLastNames=#{name}
+
         """
       else
        out += """m_arr#{country}LastNames=#{name}\n"""
@@ -27,9 +28,9 @@ Generator =
       for country in countries
         insert name, country
   
-    out # return contents of DefaultNameList.ini as string
+    out.replace /\n/g '\r\n' # return contents of DefaultNameList.ini as string
   
-  openxcom: (names) ->
+  openxcom: (names, stable) ->
   
     countries =
       'American': [30 30 20 20]
@@ -81,6 +82,15 @@ Generator =
       for name in names
         out += "  - #name\n"
       
+      if stable
+        out += 'maleLast:\n  - " "\nfemaleLast:\n  - " "\n' 
+
+      out .= replace /\n/g '\r\n'
       data[country] = out
   
-    data # return individual .nam yaml files as strings in an object
+    zip = new JSZip!
+    folder = zip.folder \SoldierName
+    for country of countries
+      folder.file "#country.nam" data[country]
+
+    zip # return data as a jszip
