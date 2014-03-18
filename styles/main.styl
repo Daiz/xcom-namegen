@@ -1,0 +1,137 @@
+@import colors
+@import sanitize
+@import fonts
+
+body
+  background: #000
+  background-image: url('assets/images/background2.jpg')
+  background-repeat: no-repeat
+  background-position: 46% top
+  color: $main
+
+#container
+  margin: 0 auto
+
+header
+  text-align: center
+  padding: 3rem 0
+
+  img
+    height: 10rem
+
+section
+  width: 50rem
+  margin: 0 auto
+  margin-bottom: 1.5rem
+  padding: 0 1rem
+  font-size: 1.5rem
+  background: rgba(0,0,0,0.8)
+  border: 1px solid $bord1
+  box-shadow: 0 0 0.5em $shad1
+  color: $main
+
+h2
+  margin: 0.1em 0
+  padding: 0.1em 0
+  font-size: 2.5rem
+  line-height: 2.5rem
+  width: 100%
+  text-align: left
+  text-transform: uppercase
+  color: $title
+  border-bottom: 1px solid $bord2
+
+  #soldier-count
+    float: right
+
+p
+  margin: 0
+  line-height: 1.25
+
+p + p
+  margin: 0.5em 0
+
+textarea
+  width: 100%
+  height: 15rem
+  color: $main
+  font-size: 1em
+  padding: 0 0.25em
+  line-height: 1.25
+  margin-bottom: 0.75em
+  outline: none
+
+::-webkit-input-placeholder
+   color: desaturate($main, 25%)
+   opacity: 0.5
+
+:-moz-placeholder /* Firefox 18- */
+   color: desaturate($main, 25%)
+   opacity: 0.5
+
+::-moz-placeholder /* Firefox 19+ */
+   color: desaturate($main, 25%)
+   opacity: 0.5
+
+:-ms-input-placeholder  
+   color: desaturate($main, 25%)
+   opacity: 0.5
+
+.button-row
+  width: 50rem
+  margin: 0 auto
+
+button
+  border: 1px solid $bord1
+  box-shadow: 0 0 0.5em $shad1
+  color: $main
+  width: 24.5rem
+  margin: 0
+  margin-bottom: 1rem
+  padding: 0.25rem 0
+  display: inline-block
+  font-size: 1.1em
+  text-tranform: uppercase
+  background: rgba(0,0,0,0.8)
+  background-image: url('assets/images/gradient.png')
+  background-repeat: repeat-x
+  background-position: center top
+  outline: none
+
+button:nth-child(even)
+  margin-left: 0.5rem
+
+button:nth-child(odd)
+  margin-right: 0.5rem
+
+.button-row + .button-row
+  margin-bottom: 0.5rem
+
+button.disabled
+  border: 1px solid desaturate($bord1, 100%)
+  box-shadow: 0 0 0.5em desaturate($shad1, 100%)
+  color: desaturate($main, 100%)
+  background-image: url('assets/images/gradient_gray.png')
+
+.red
+  color: $red1
+
+.meld
+  color: $meld
+
+.green
+  color: $green
+
+h3
+  margin: 0
+  padding: 0
+  font-size: 2.5em
+  line-height: 1.0
+
+a, a:active
+  color: $yellow1
+  text-decoration: none
+
+a:visited
+  color: $orange1
+  text-decoration: none
