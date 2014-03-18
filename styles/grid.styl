@@ -1,0 +1,34 @@
+flexbox()
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+
+flex(n)
+  -webkit-box-flex: n
+  -mox-box-flex: n
+  -webkit-flex: n
+  -ms-flex: n
+  flex: n
+
+order(n)
+  -webkit-box-ordinal-group: n
+  -moz-box-ordinal-group: n
+  -ms-flex-order: n
+  -webkit-order: n
+  order: n
+
+.row
+  flexbox()
+
+.cell
+  flex: 1
+
+body
+  flexbox()
+  flex-direction: column
+  min-height: 100vh
+
+main
+  flex: 1
