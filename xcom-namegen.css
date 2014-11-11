@@ -133,6 +133,7 @@ button {
   background-repeat: repeat-x;
   background-position: center top;
   outline: none;
+  cursor: pointer;
 }
 button:nth-child(even) {
   margin-left: 0.5rem;
@@ -148,6 +149,7 @@ button.disabled {
   box-shadow: 0 0 0.5em rgba(174,174,174,0.5);
   color: #adadad;
   background-image: url("assets/images/gradient_gray.png");
+  cursor: default;
 }
 .red {
   color: #ee1c25;

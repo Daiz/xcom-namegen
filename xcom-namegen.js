@@ -11460,28 +11460,58 @@ Download = {
   }
 };
 Generator = {
-  enemyWithin: function(names){
-    var countries, doubled, out, i$, len$, c, insert, name, j$, len1$, country;
+  enemyWithin: function(names, longWar){
+    var countries, doubled, split, len, out, i$, len$, country, insert, insertNames;
     countries = ['Am', 'Rs', 'Ch', 'In', 'Af', 'Mx', 'Ab', 'En', 'Fr', 'Gm', 'Au', 'It', 'Jp', 'Is', 'Es', 'Gr', 'Nw', 'Ir', 'Sk', 'Du', 'Sc', 'Bg', 'Pl'];
     doubled = /^(Rs|Pl)$/;
+    split = /^(Am|Rs|Af|Mx|En|Fr|Gr|Nw|Pl)$/;
+    len = names.length;
     out = "[XComGame.XGCharacterGenerator]\n";
     for (i$ = 0, len$ = countries.length; i$ < len$; ++i$) {
-      c = countries[i$];
-      out += "m_arr" + c + "MFirstNames=\"\"\nm_arr" + c + "FFirstNames=\"\"\n";
-    }
-    insert = function(name, country){
-      if (doubled.test(country)) {
-        out += "m_arr" + country + "MLastNames=" + name + "\nm_arr" + country + "FLastNames=" + name + "\n";
+      country = countries[i$];
+      out += "; /// First names for " + country + " ///\n";
+      if (longWar && split.test(country)) {
+        out += ("m_arr" + country + "MFirstNames=\"1\"\nm_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"1\"\nm_arr" + country + "FFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"\"").replace(/\ +/g, ' ') + '\n';
       } else {
-        out += "m_arr" + country + "LastNames=" + name + "\n";
+        out += ("m_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"\"").replace(/\ +/g, ' ') + '\n';
+      }
+    }
+    insert = function(country, gender){
+      var genders, splitNames, i$, ref$, len$, name;
+      gender == null && (gender = "");
+      genders = {
+        "": "",
+        "M": " (male)",
+        "F": " (female)"
+      };
+      splitNames = split.test(country);
+      out += "; /// Last names" + genders[gender] + " for " + country + " ///\n";
+      if (longWar && splitNames) {
+        out += "m_arr" + country + gender + "LastNames=" + len + "\n";
+      }
+      for (i$ = 0, len$ = (ref$ = names).length; i$ < len$; ++i$) {
+        name = ref$[i$];
+        out += "m_arr" + country + gender + "LastNames=" + name + "\n";
+      }
+      if (longWar && splitNames) {
+        out += "; /// Last names" + genders[gender] + " for " + country + " (split) ///\n";
+        for (i$ = 0, len$ = (ref$ = names).length; i$ < len$; ++i$) {
+          name = ref$[i$];
+          out += "m_arr" + country + gender + "LastNames=" + name + "\n";
+        }
       }
     };
-    for (i$ = 0, len$ = names.length; i$ < len$; ++i$) {
-      name = names[i$];
-      for (j$ = 0, len1$ = countries.length; j$ < len1$; ++j$) {
-        country = countries[j$];
-        insert(name, country);
+    insertNames = function(country){
+      if (doubled.test(country)) {
+        insert(country, "M");
+        insert(country, "F");
+      } else {
+        insert(country);
       }
+    };
+    for (i$ = 0, len$ = countries.length; i$ < len$; ++i$) {
+      country = countries[i$];
+      insertNames(country);
     }
     return out.replace(/\n/g, '\r\n');
   },
@@ -11492,6 +11522,7 @@ Generator = {
       'Arabic': [0, 1, 99, 0],
       'Belgium': [70, 28, 1, 1],
       'British': [35, 35, 20, 10],
+      'Bulgarian': [50, 50, 0, 0],
       'Chinese': [1, 1, 93, 5],
       'Congolese': [0, 0, 0, 100],
       'Czech': [50, 50, 0, 0],
@@ -11519,7 +11550,7 @@ Generator = {
       'Slovak': [45, 55, 0, 0],
       'Spanish': [4, 88, 4, 4],
       'Swedish': [60, 40, 0, 0],
-      'Turkish': [24, 48, 24, 1]
+      'Turkish': [24, 48, 24, 4]
     };
     data = {};
     for (country in countries) {
@@ -11555,7 +11586,7 @@ Generator = {
 };
 Init = function(){
   return $(function(){
-    var namelist, namecount, names, namesUpdate, btnEw, btnXn, btnOg, btnOs;
+    var namelist, namecount, names, namesUpdate, btnEw, btnLw, btnXn, btnOg;
     namelist = $('textarea');
     namecount = $('#soldier-count');
     names = [];
@@ -11571,22 +11602,22 @@ Init = function(){
     namesUpdate();
     namelist.on('input propertychange change', namesUpdate);
     btnEw = $('#eu-ew');
+    btnLw = $('#long-war');
     btnXn = $('#xenos');
-    btnOg = $('#og-nightly');
-    btnOs = $('#og-stable');
+    btnOg = $('#openxcom');
     btnEw.click(function(){
       var namedata;
       namedata = Generator.enemyWithin(names);
       return Download.file(namedata, "DefaultNameList.ini");
     });
+    btnLw.click(function(){
+      var namedata;
+      namedata = Generator.enemyWithin(names, true);
+      return Download.file(namedata, "DefaultNameList.ini");
+    });
     btnOg.click(function(){
       var namedata;
       namedata = Generator.openxcom(names);
-      return Download.file(namedata, "SoldierName.zip");
-    });
-    btnOs.click(function(){
-      var namedata;
-      namedata = Generator.openxcom(names, true);
       return Download.file(namedata, "SoldierName.zip");
     });
   });
