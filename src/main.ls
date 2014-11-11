@@ -21,18 +21,18 @@ Init = ->
   namelist.on 'input propertychange change' names-update
 
   btn-ew = $ \#eu-ew
+  btn-lw = $ \#long-war
   btn-xn = $ \#xenos
-  btn-og = $ \#og-nightly
-  btn-os = $ \#og-stable
+  btn-og = $ \#openxcom
 
   btn-ew.click ->
     namedata = Generator.enemy-within names
     Download.file namedata, "DefaultNameList.ini"
 
+  btn-lw.click ->
+    namedata = Generator.enemy-within names, true
+    Download.file namedata, "DefaultNameList.ini"
+
   btn-og.click ->
     namedata = Generator.openxcom names
-    Download.file namedata, "SoldierName.zip"
-
-  btn-os.click ->
-    namedata = Generator.openxcom names, true
     Download.file namedata, "SoldierName.zip"
