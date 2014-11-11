@@ -1,35 +1,57 @@
 Generator =
 
-  enemy-within: (names) ->
+  enemy-within: (names, long-war) ->
   
     countries = <[ Am Rs Ch In Af Mx Ab En Fr Gm Au It Jp Is Es Gr Nw Ir Sk Du Sc Bg Pl ]>
     doubled = /^(Rs|Pl)$/
+    split = /^(Am|Rs|Af|Mx|En|Fr|Gr|Nw|Pl)$/
+    len = names.length
+    # thanks to Radioman for explaining how the country name splitting works.
   
     out = "[XComGame.XGCharacterGenerator]\n"
-  
-    for c in countries
-      out += """
-      m_arr#{c}MFirstNames=""
-      m_arr#{c}FFirstNames=""
 
-      """
-  
-    insert = (name, country) !->
-      if doubled.test country
-        out += """
-        m_arr#{country}MLastNames=#{name}
-        m_arr#{country}FLastNames=#{name}
-
-        """
+    for country in countries
+      out += """; /// First names for #{country} ///\n"""
+      if long-war and split.test country
+        out += ("""
+        m_arr#{country}MFirstNames="1"
+        m_arr#{country}MFirstNames=""
+        m_arr#{country}MFirstNames=""
+        m_arr#{country}FFirstNames="1"
+        m_arr#{country}FFirstNames=""
+        m_arr#{country}FFirstNames=""
+        """.replace /\ +/g ' ')+'\n'
       else
-       out += """m_arr#{country}LastNames=#{name}\n"""
-  
-    for name in names
-      for country in countries
-        insert name, country
+        out += ("""
+        m_arr#{country}MFirstNames=""
+        m_arr#{country}FFirstNames=""
+        """.replace /\ +/g ' ')+'\n'
+
+    insert = (country, gender = "") !->
+      genders = {"": "","M": " (male)","F": " (female)"}
+      split-names = split.test country
+      out += """; /// Last names#{genders[gender]} for #{country} ///\n"""
+      if long-war and split-names
+        out += """m_arr#{country}#{gender}LastNames=#{len}\n"""
+      for name in names
+        out += """m_arr#{country}#{gender}LastNames=#{name}\n"""
+      if long-war and split-names
+        out += """; /// Last names#{genders[gender]} for #{country} (split) ///\n"""
+        for name in names
+          out += """m_arr#{country}#{gender}LastNames=#{name}\n"""
+
+    insert-names = (country) !->
+      if doubled.test country
+        insert country, "M"
+        insert country, "F"
+      else
+        insert country
+
+    for country in countries
+      insert-names country
   
     out.replace /\n/g '\r\n' # return contents of DefaultNameList.ini as string
-  
+
   openxcom: (names, stable) ->
   
     countries =
