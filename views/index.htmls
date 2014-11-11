@@ -34,10 +34,13 @@ html {lang: \en} ->
           p """
           XCOM Namelist Generator currently works with 
           <a href="http://www.xcom.com/enemyunknown/">XCOM:&nbsp;Enemy&nbsp;Unknown</a>,
-          <a href="http://www.xcom.com/enemywithin/">XCOM:&nbsp;Enemy&nbsp;Within</a> and 
+          <a href="http://www.xcom.com/enemywithin/">XCOM:&nbsp;Enemy&nbsp;Within</a>,
+          <a href="http://www.nexusmods.com/xcom/mods/88/">XCOM:&nbsp;Long&nbsp;War</a> and 
           <a href="http://openxcom.org/">OpenXcom</a>. 
-          Xenonauts support is planned, 
-          though I would actually need the game first.
+          For anyone hoping for <a href="http://www.xenonauts.com/">Xenonauts</a>
+          support, consider gifting the game to me as I don't really have interest
+          in it otherwise. My Steam account is
+          <a href="http://steamcommunity.com/id/daiz/">here</a>.
           """
         section ->
           h2 ->
@@ -46,10 +49,10 @@ html {lang: \en} ->
           textarea {placeholder: "Paste names here"} ""
         div {class: \button-row} ->
           button {id: \eu-ew} "<h3>DOWNLOAD</h3>for Enemy Unknown &amp; Within"
-          button {id: \xenos class: \disabled} "<h3>DOWNLOAD</h3>for Xenonauts <span class=red>(unavailable)</span>"
+          button {id: \long-war} "<h3>DOWNLOAD</h3>for Long War Beta 14F"
         div {class: \button-row} ->
-          button {id: \og-nightly} "<h3>DOWNLOAD</h3>for OpenXcom Nightly"
-          button {id: \og-stable} "<h3>DOWNLOAD</h3>For OpenXcom Stable"
+          button {id: \openxcom} "<h3>DOWNLOAD</h3>for OpenXcom 1.0"
+          button {id: \xenos class: \disabled} "<h3>DOWNLOAD</h3>for Xenonauts <span class=red>(unavailable)</span>"
         section ->
           h2 "How to use the namefiles"
           p """
@@ -65,7 +68,7 @@ html {lang: \en} ->
           <span class="green">[XCOM&nbsp;Install&nbsp;Path]\\XComGame\\Config\\</span> 
           """
           p """
-          For Enemy Within, the file should go to 
+          For Enemy Within &amp; Long War, the path is 
           <span class="green">[XCOM&nbsp;Install&nbsp;Path]\\XEW\\XComGame\\Config\\</span>
           """
           p """
@@ -92,10 +95,4 @@ html {lang: \en} ->
             If you find any bugs or want to give feedback,
             you can tell all about it on """
             a {href: 'https://github.com/Daiz-/xcom-namegen/issues'} "GitHub"
-            $ "."
-          p ->
-            $ """
-            And if you want to bribe me with Xenonauts so I can add namelist
-            generation support for it, you can find my Steam account """
-            a {href: 'http://steamcommunity.com/id/daiz/'} "here"
             $ "."
