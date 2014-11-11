@@ -37,6 +37,7 @@ Generator =
       'Arabic': [0 1 99 0]
       'Belgium': [70 28 1 1]
       'British': [35 35 20 10]
+      'Bulgarian': [50 50 0 0]
       'Chinese': [1 1 93 5]
       'Congolese': [0 0 0 100]
       'Czech': [50 50 0 0]
