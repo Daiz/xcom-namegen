@@ -12,11 +12,12 @@ require! {
   \open
 }
 
+IP = void
 DIR = __dirname
 for k,v of os.network-interfaces!
   for i in v
-    if i.family == \IPv4 and i.address != "127.0.0.1"
-      IP = i.address
+    if !IP and i.family == \IPv4 and i.address.match /^192.168/
+      IP := i.address
 
 if not test \-e \.public
   mkdir \.public
