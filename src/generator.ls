@@ -64,7 +64,7 @@ Generator =
       'Slovak': [45 55 0 0]
       'Spanish': [4 88 4 4]
       'Swedish': [60 40 0 0]
-      'Turkish': [24 48 24 1]
+      'Turkish': [24 48 24 4]
   
     data = {}
   
