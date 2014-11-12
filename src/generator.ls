@@ -33,13 +33,13 @@ Generator =
       split-names = split.test country
       out += """; /// Last names#{genders[gender]} for #{country} ///\n"""
       if long-war and split-names
-        out += """m_arr#{country}#{gender}LastNames=#{len}\n"""
+        out += """m_arr#{country}#{gender}LastNames="#{len}"\n"""
       for name in names
-        out += """m_arr#{country}#{gender}LastNames=#{name}\n"""
+        out += """m_arr#{country}#{gender}LastNames="#{name}"\n"""
       if long-war and split-names
         out += """; /// Last names#{genders[gender]} for #{country} (split) ///\n"""
         for name in names
-          out += """m_arr#{country}#{gender}LastNames=#{name}\n"""
+          out += """m_arr#{country}#{gender}LastNames="#{name}"\n"""
 
     insert-names = (country) !->
       if doubled.test country
