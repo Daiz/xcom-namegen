@@ -5,6 +5,7 @@ Generator =
     countries = <[ Am Rs Ch In Af Mx Ab En Fr Gm Au It Jp Is Es Gr Nw Ir Sk Du Sc Bg Pl ]>
     doubled = /^(Rs|Pl)$/
     split = /^(Am|Rs|Af|Mx|En|Fr|Gr|Nw|Pl)$/
+    unsplit = /^(Gr)$/ # split countries with non-split first names
     len = names.length
     # thanks to Radioman for explaining how the country name splitting works.
   
@@ -12,7 +13,7 @@ Generator =
 
     for country in countries
       out += """; /// First names for #{country} ///\n"""
-      if long-war and split.test country
+      if long-war and split.test country and not unsplit.test country
         out += ("""
         m_arr#{country}MFirstNames="1"
         m_arr#{country}MFirstNames=""
