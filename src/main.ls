@@ -11,8 +11,10 @@ Init = ->
       .replace /\r\n|\r/g '\n'
       .replace /\n\n+/g '\n'
       .trim!
+      .replace /"|;/g ''
       .split '\n'
     names := [] if !names-text
+
 
     namecount.text "#{names.length} names"
 
