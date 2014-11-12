@@ -11461,16 +11461,17 @@ Download = {
 };
 Generator = {
   enemyWithin: function(names, longWar){
-    var countries, doubled, split, len, out, i$, len$, country, insert, insertNames;
+    var countries, doubled, split, unsplit, len, out, i$, len$, country, insert, insertNames;
     countries = ['Am', 'Rs', 'Ch', 'In', 'Af', 'Mx', 'Ab', 'En', 'Fr', 'Gm', 'Au', 'It', 'Jp', 'Is', 'Es', 'Gr', 'Nw', 'Ir', 'Sk', 'Du', 'Sc', 'Bg', 'Pl'];
     doubled = /^(Rs|Pl)$/;
     split = /^(Am|Rs|Af|Mx|En|Fr|Gr|Nw|Pl)$/;
+    unsplit = /^(Gr)$/;
     len = names.length;
     out = "[XComGame.XGCharacterGenerator]\n";
     for (i$ = 0, len$ = countries.length; i$ < len$; ++i$) {
       country = countries[i$];
       out += "; /// First names for " + country + " ///\n";
-      if (longWar && split.test(country)) {
+      if (longWar && split.test(country) && !unsplit.test(country)) {
         out += ("m_arr" + country + "MFirstNames=\"1\"\nm_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"1\"\nm_arr" + country + "FFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"\"").replace(/\ +/g, ' ') + '\n';
       } else {
         out += ("m_arr" + country + "MFirstNames=\"\"\nm_arr" + country + "FFirstNames=\"\"").replace(/\ +/g, ' ') + '\n';
@@ -11487,17 +11488,17 @@ Generator = {
       splitNames = split.test(country);
       out += "; /// Last names" + genders[gender] + " for " + country + " ///\n";
       if (longWar && splitNames) {
-        out += "m_arr" + country + gender + "LastNames=" + len + "\n";
+        out += "m_arr" + country + gender + "LastNames=\"" + len + "\"\n";
       }
       for (i$ = 0, len$ = (ref$ = names).length; i$ < len$; ++i$) {
         name = ref$[i$];
-        out += "m_arr" + country + gender + "LastNames=" + name + "\n";
+        out += "m_arr" + country + gender + "LastNames=\"" + name + "\"\n";
       }
       if (longWar && splitNames) {
         out += "; /// Last names" + genders[gender] + " for " + country + " (split) ///\n";
         for (i$ = 0, len$ = (ref$ = names).length; i$ < len$; ++i$) {
           name = ref$[i$];
-          out += "m_arr" + country + gender + "LastNames=" + name + "\n";
+          out += "m_arr" + country + gender + "LastNames=\"" + name + "\"\n";
         }
       }
     };
@@ -11593,7 +11594,7 @@ Init = function(){
     namesUpdate = function(){
       var namesText;
       namesText = namelist.val();
-      names = namesText.replace(/\r\n|\r/g, '\n').replace(/\n\n+/g, '\n').trim().split('\n');
+      names = namesText.replace(/\r\n|\r/g, '\n').replace(/\n\n+/g, '\n').trim().replace(/"|;/g, '').split('\n');
       if (!namesText) {
         names = [];
       }
