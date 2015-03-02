@@ -11516,6 +11516,58 @@ Generator = {
     }
     return out.replace(/\n/g, '\r\n');
   },
+  longWarB15: function(names){
+    var countries, splits, doubled, len, out, i$, len$, index, country, count, insert, insertNames;
+    countries = ['Am', 'Rs', 'Ch', 'In', 'Af', 'Mx', 'Ab', 'En', 'Fr', 'Gm', 'Au', 'It', 'Jp', 'Is', 'Es', 'Gr', 'Nw', 'Ir', 'Sk', 'Du', 'Sc', 'Bg', 'Pl'];
+    splits = [3, 7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7];
+    doubled = /^(Rs|Pl)$/;
+    len = names.length;
+    out = "[XComGame.XGCharacterGenerator]\n";
+    for (i$ = 0, len$ = countries.length; i$ < len$; ++i$) {
+      index = i$;
+      country = countries[i$];
+      out += "; /// First names for " + country + " ///\n";
+      count = splits[index];
+      out += repeatString$("m_arr" + country + "MFirstNames=\"1\"\n", count);
+      out += repeatString$("m_arr" + country + "MFirstNames=\"\"\n", count);
+      out += repeatString$("m_arr" + country + "FFirstNames=\"1\"\n", count);
+      out += repeatString$("m_arr" + country + "FFirstNames=\"\"\n", count);
+      out += "\n";
+    }
+    insert = function(country, index, gender){
+      var genders, count, i$, x, j$, ref$, len$, name;
+      gender == null && (gender = "");
+      genders = {
+        "": "",
+        "M": " (male)",
+        "F": " (female)"
+      };
+      count = splits[index];
+      out += "; /// Last names" + genders[gender] + " for " + country + " ///\n";
+      out += repeatString$("m_arr" + country + gender + "LastNames=\"" + len + "\"\n", count);
+      for (i$ = 0; i$ < count; ++i$) {
+        x = i$;
+        for (j$ = 0, len$ = (ref$ = names).length; j$ < len$; ++j$) {
+          name = ref$[j$];
+          out += "m_arr" + country + gender + "LastNames=\"" + name + "\"\n";
+        }
+      }
+    };
+    insertNames = function(country, index){
+      if (doubled.test(country)) {
+        insert(country, index, "M");
+        insert(country, index, "F");
+      } else {
+        insert(country, index);
+      }
+    };
+    for (i$ = 0, len$ = countries.length; i$ < len$; ++i$) {
+      index = i$;
+      country = countries[i$];
+      insertNames(country, index);
+    }
+    return out.replace(/\n/g, '\r\n');
+  },
   openxcom: function(names, stable){
     var countries, data, country, lookWeights, out, i$, len$, weight, name, zip, folder;
     countries = {
@@ -11587,7 +11639,7 @@ Generator = {
 };
 Init = function(){
   return $(function(){
-    var namelist, namecount, names, namesUpdate, btnEw, btnLw, btnXn, btnOg;
+    var namelist, namecount, names, namesUpdate, btnEw, btnLw, btnB15, btnOg;
     namelist = $('textarea');
     namecount = $('#soldier-count');
     names = [];
@@ -11604,7 +11656,7 @@ Init = function(){
     namelist.on('input propertychange change', namesUpdate);
     btnEw = $('#eu-ew');
     btnLw = $('#long-war');
-    btnXn = $('#xenos');
+    btnB15 = $('#lw-b15');
     btnOg = $('#openxcom');
     btnEw.click(function(){
       var namedata;
@@ -11616,6 +11668,11 @@ Init = function(){
       namedata = Generator.enemyWithin(names, true);
       return Download.file(namedata, "DefaultNameList.ini");
     });
+    btnB15.click(function(){
+      var namedata;
+      namedata = Generator.longWarB15(names);
+      return Download.file(namedata, "DefaultNameList.ini");
+    });
     btnOg.click(function(){
       var namedata;
       namedata = Generator.openxcom(names);
@@ -11623,5 +11680,9 @@ Init = function(){
     });
   });
 };
+function repeatString$(str, n){
+  for (var r = ''; n > 0; (n >>= 1) && (str += str)) if (n & 1) r += str;
+  return r;
+}
   Init();
 })();
