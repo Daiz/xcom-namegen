@@ -46,10 +46,8 @@ html {lang: \en} ->
           <a href="http://www.xcom.com/enemywithin/">XCOM:&nbsp;Enemy&nbsp;Within</a>,
           <a href="http://www.nexusmods.com/xcom/mods/88/">XCOM:&nbsp;Long&nbsp;War</a> and 
           <a href="http://openxcom.org/">OpenXcom</a>. 
-          For anyone hoping for <a href="http://www.xenonauts.com/">Xenonauts</a>
-          support, consider gifting the game to me as I don't really have interest
-          in it otherwise. My Steam account is
-          <a href="http://steamcommunity.com/id/daiz/">here</a>.
+          Support for <a href="http://www.xenonauts.com/">Xenonauts</a>
+          is planned but not yet implemented.
           """
         section ->
           h2 ->
@@ -61,7 +59,7 @@ html {lang: \en} ->
           button {id: \long-war} "<h3>DOWNLOAD</h3>for Long War Beta 14F"
         div {class: \button-row} ->
           button {id: \openxcom} "<h3>DOWNLOAD</h3>for OpenXcom 1.0"
-          button {id: \xenos class: \disabled} "<h3>DOWNLOAD</h3>for Xenonauts <span class=red>(unavailable)</span>"
+          button {id: \lw-b15} "<h3>DOWNLOAD</h3>for Long War Beta 15"
         section ->
           h2 "How to use the namefiles"
           p """
@@ -92,7 +90,7 @@ html {lang: \en} ->
           h2 "About XCOM Namelist Generator"
           p ->
             $ "&copy; "
-            a {href: 'https://github.com/Daiz-'} "Daiz"
+            a {href: 'https://github.com/Daiz'} "Daiz"
             $ """
              2014. Background image &copy; 
             <a href="http://www.xcom.com/enemyunknown/videos">Firaxis</a> 2013. 
@@ -103,5 +101,5 @@ html {lang: \en} ->
             $ """
             If you find any bugs or want to give feedback,
             you can tell all about it on """
-            a {href: 'https://github.com/Daiz-/xcom-namegen/issues'} "GitHub"
+            a {href: 'https://github.com/Daiz/xcom-namegen/issues'} "GitHub"
             $ "."
