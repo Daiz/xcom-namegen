@@ -53,6 +53,45 @@ Generator =
   
     out.replace /\n/g '\r\n' # return contents of DefaultNameList.ini as string
 
+  long-war-b15: (names) ->
+  
+    countries = <[ Am Rs Ch In Af Mx Ab En Fr Gm Au It Jp Is Es Gr Nw Ir Sk Du Sc Bg Pl ]>
+    splits    =  [  3  7  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  7 ]
+    doubled   = /^(Rs|Pl)$/
+    len = names.length
+  
+    out = "[XComGame.XGCharacterGenerator]\n"
+
+    for country, index in countries
+      out += """; /// First names for #{country} ///\n"""
+      count = splits[index]
+      out += """m_arr#{country}MFirstNames="1"\n""" * count
+      out += """m_arr#{country}MFirstNames=""\n"""  * count
+      out += """m_arr#{country}FFirstNames="1"\n""" * count
+      out += """m_arr#{country}FFirstNames=""\n"""  * count
+      out += "\n"
+
+    insert = (country, index, gender = "") !->
+      genders = {"": "","M": " (male)","F": " (female)"}
+      count = splits[index]
+      out += """; /// Last names#{genders[gender]} for #{country} ///\n"""
+      out += """m_arr#{country}#{gender}LastNames="#{len}"\n""" * count
+      for x from 0 til count
+        for name in names
+          out += """m_arr#{country}#{gender}LastNames="#{name}"\n"""
+
+    insert-names = (country, index) !->
+      if doubled.test country
+        insert country, index, "M"
+        insert country, index, "F"
+      else
+        insert country, index
+
+    for country, index in countries
+      insert-names country, index
+  
+    out.replace /\n/g '\r\n' # return contents of DefaultNameList.ini as string
+
   openxcom: (names, stable) ->
   
     countries =
