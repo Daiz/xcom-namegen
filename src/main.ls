@@ -22,10 +22,10 @@ Init = ->
 
   namelist.on 'input propertychange change' names-update
 
-  btn-ew = $ \#eu-ew
-  btn-lw = $ \#long-war
-  btn-xn = $ \#xenos
-  btn-og = $ \#openxcom
+  btn-ew  = $ \#eu-ew
+  btn-lw  = $ \#long-war
+  btn-b15 = $ \#lw-b15
+  btn-og  = $ \#openxcom
 
   btn-ew.click ->
     namedata = Generator.enemy-within names
@@ -33,6 +33,10 @@ Init = ->
 
   btn-lw.click ->
     namedata = Generator.enemy-within names, true
+    Download.file namedata, "DefaultNameList.ini"
+
+  btn-b15.click ->
+    namedata = Generator.long-war-b15 names
     Download.file namedata, "DefaultNameList.ini"
 
   btn-og.click ->
